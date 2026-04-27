@@ -1,6 +1,6 @@
 import Modal from "../../ui/Modal/Modal";
 import styles from "./Home.module.css";
-import { NavLink, Outlet, useNavigate, useMatch } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import {
   useDeleteChatMutation,
   useGetChatsQuery,
@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import Loader from "../../ui/Loader/Loader";
 import Create from "../../ui/Create/Create";
 import Join from "../../ui/Join/Join";
+import { useState } from "react";
 
 function Home() {
   const { data: chats, isLoading } = useGetChatsQuery();
@@ -19,10 +20,7 @@ function Home() {
   const [deleteChat, { isLoading: isDeleting }] = useDeleteChatMutation();
   const dispatch = useDispatch();
   let navigate = useNavigate();
-  const isCreate = useMatch("/home/create");
-  const isJoin = useMatch("/home/join");
-
-  console.log(isOpenModal);
+  const [modalTab, setModalTab] = useState("create");
 
   if (isLoading || isDeleting)
     return (
@@ -75,17 +73,27 @@ function Home() {
           <nav>
             <ul className={styles.tab}>
               <li className={styles.tab__item}>
-                <NavLink to={"/home/create"}>Create</NavLink>
+                <button
+                  className={modalTab === "create" ? styles.tab__active : ""}
+                  onClick={() => setModalTab("create")}
+                >
+                  Create
+                </button>
               </li>
               <li className={styles.tab__item}>
-                <NavLink to={"/home/join"}>Join</NavLink>
+                <button
+                  className={modalTab === "join" ? styles.tab__active : ""}
+                  onClick={() => setModalTab("join")}
+                >
+                  Join
+                </button>
               </li>
             </ul>
           </nav>
 
           <div>
-            {isCreate && <Create />}
-            {isJoin && <Join />}
+            {modalTab === "create" && <Create />}
+            {modalTab === "join" && <Join />}
           </div>
         </div>
       </Modal>

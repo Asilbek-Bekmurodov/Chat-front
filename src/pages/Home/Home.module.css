@@ -88,27 +88,29 @@
   margin-bottom: 20px;
 }
 
-.tab__item a {
+.tab__item button {
   display: block;
   padding: 8px 16px;
   font-size: 14px;
   font-weight: 500;
   color: var(--text-secondary);
-  text-decoration: none;
+  background: none;
+  border: none;
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
+  cursor: pointer;
   transition:
     color var(--transition),
     border-color var(--transition);
 }
 
-.tab__item a:hover {
+.tab__item button:hover {
   color: var(--accent);
 }
 
-.tab__item a.active {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
+.tab__active {
+  color: var(--accent) !important;
+  border-bottom-color: var(--accent) !important;
 }
 
 .chat {
